@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\CarouselItemsController;
+use App\Http\Controllers\Api\CarouselItemsController; //nagbase ni sya asa gi import sa file
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/carousel', [CarouselItemsController::class, 'index']);
+Route::get('/carousel/{id}', [CarouselItemsController::class, 'show']);
+Route::delete('/carousel/{id}', [CarouselItemsController::class, 'destroy']);
