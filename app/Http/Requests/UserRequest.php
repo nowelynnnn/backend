@@ -21,10 +21,31 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'        => 'required|string|max:255',
-            'email'       => 'required|string|unique:App\Models\User,email|email|max:255',
-            'password'    => 'required|min:8',
-        ];
+        if(request()->routeIs('users.store')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
+
+            return [
+                'name'        => 'required|string|max:255', //makita ni sya sa available validation rules laravel docu
+                'email'       => 'required|string|email|unique:App\Models\User,email|max:255', //unique:App\Models\User,email ang kani sya para mag message nga nag exist natoh na email
+                'password'    => 'required|min:8',
+             ];
+        }
+        else if(request()->routeIs('users.update')) {
+            
+            return [
+                'name'        => 'required|string|max:255', //kay si name ramn atong need validate
+             ];
+        }
+        else if(request()->routeIs('users.email')) {
+            
+            return [
+                'email'       => 'required|string|email|max:255', 
+             ];
+        }
+        else if(request()->routeIs('users.password')) {
+            
+            return [
+                'password'    => 'required|confirmed|min:8',
+             ];
+        }
     }
 }

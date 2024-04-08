@@ -28,5 +28,8 @@ Route::delete('/carousel/{id}', [CarouselItemsController::class, 'destroy']);
 
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
+Route::post('/user', [UserController::class, 'store'])->name('users.store');
+Route::put('/user/{id}', [UserController::class, 'update'])->name('users.update');
+Route::put('/user/email/{id}', [UserController::class, 'email'])->name('users.email');
+Route::put('/user/password/{id}', [UserController::class, 'password'])->name('users.password');
 Route::delete('/user/{id}', [UserController::class, 'destroy']);
-Route::post('/user', [UserController::class, 'store']);
