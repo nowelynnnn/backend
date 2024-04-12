@@ -16,24 +16,33 @@ use App\Http\Controllers\Api\UserController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::controller(AuthController::class)->group(function () { //gi isa murag grouing base tanan sa AuthController
-    Route::post('/login',           'login')->name('users.login');;
-    Route::post('/logout',          'logout')->name('users.logout');;
+// PUBLIC APIs
+Route::post('/login', [AuthController::class,'login' ])->name('users.login');;
+Route::post('/user', [UserController::class,'store' ])->name('users.store');
+ 
+
+// PRIVATE APIs
+Route::middleware(['auth:sanctum'])->group(function () {
+Route::post('/logout', [AuthController::class,'logout' ]);
+
+     Route::controller(CarouselItemsController::class)->group(function () { 
+        Route::get('/carousel',             'index');
+        Route::get('/carousel/{id}',        'show');
+        Route::post('/carousel',            'store');
+        Route::put('/carousel/{id}',        'update');
+        Route::delete('/carousel/{id}',     'destroy');
+    });
+    
+    Route::controller(UserController::class)->group(function () {    
+        Route::get('/user',                 'index');
+        Route::get('/user/{id}',            'show');
+        Route::put('/user/{id}',            'update')->name('users.update');
+        Route::put('/user/email/{id}',      'email')->name('users.email');
+        Route::put('/user/password/{id}',   'password')->name('users.password');
+        Route::delete('/user/{id}',         'destroy');
+        });
 });
 
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::controller(CarouselItemsController::class)->group(function () { 
-    Route::get('/carousel',         'index');
-    Route::get('/carousel/{id}',    'show');
-    Route::post('/carousel',        'store');
-    Route::put('/carousel/{id}',    'update');
-    Route::delete('/carousel/{id}', 'destroy');
-});
 
 
 
