@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarouselItemsController; //nagbase ni sya asa gi import sa file
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\UserController;
 
 /*
@@ -39,8 +40,13 @@ Route::post('/logout', [AuthController::class,'logout' ]);
         Route::put('/user/{id}',            'update')->name('users.update');
         Route::put('/user/email/{id}',      'email')->name('users.email');
         Route::put('/user/password/{id}',   'password')->name('users.password');
+        Route::put('/user/image/{id}',      'image')->name('users.image');
         Route::delete('/user/{id}',         'destroy');
         });
+
+    //User specific APIS
+        Route::get('/profile/show',       [ProfileController::class,'show' ]); //pag reading lang GET ang gamiton
+        Route::put('/profile/image',      [ProfileController::class,'image' ])->name('profile.image'); //update sa specific user
 });
 
 

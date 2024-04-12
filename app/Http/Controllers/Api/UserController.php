@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest; //import gikan sa request file
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash; //naggamit ug hash sa update
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -84,7 +85,7 @@ class UserController extends Controller
 
         $validated = $request->validated(); //validate kong naa bah jud
  
-        $user->password = $validated ['password']; 
+        $user->password = Hash::make($validated['password']);
 
         $user->save(); //save dayon niya 
 
@@ -104,4 +105,23 @@ class UserController extends Controller
 
         return $User;       
     }   
+
+
+       /**
+     * Update the image of the specified resource from storage.
+     */
+    public function image(UserRequest $request, string $id) //dapat na create ang account before update
+    {
+        $user = User::findOrFail($id); //pangitaon ang user
+
+        if (!is_null($user->image)){ //tan awon kong nay image daan 
+            Storage::disk('public')->delete($user->image);
+        }
+
+        $user->image = $request->file('image')->storePublicly('images', 'public'); //kong naa delete aron ma update
+
+        $user->save(); //save dayon niya 
+
+        return $user;     
+    }  
 }
