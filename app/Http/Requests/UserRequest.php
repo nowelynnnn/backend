@@ -24,9 +24,13 @@ class UserRequest extends FormRequest
         if(request()->routeIs('users.store')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
 
             return [
-                'name'        => 'required|string|max:255', //makita ni sya sa available validation rules laravel docu
-                'email'       => 'required|string|email|unique:App\Models\User,email|max:255', //unique:App\Models\User,email ang kani sya para mag message nga nag exist natoh na email
-                'password'    => 'required|min:8',
+                'firstname'        => 'required|max:255', //makita ni sya sa available validation rules laravel docu
+                'lastname'         => 'required|string|max:255',
+                'email'            => 'required|string|email|unique:App\Models\User,email|max:255', //unique:App\Models\User,email ang kani sya para mag message nga nag exist natoh na email
+                'password'         => 'required|min:8|confirmed',
+                'gender'           => 'required|max:255',
+                'address'          => 'required|max:255',
+                'birthdate'        => 'nullable|date',
              ];
         }
         else if(request()->routeIs('users.update')) {
