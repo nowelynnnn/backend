@@ -21,7 +21,16 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(request()->routeIs('users.store')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
+        if(request()->routeIs('users.login')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
+
+            return [
+                'email'       => 'required|string|email|max:255', //unique:App\Models\User,email ang kani sya para mag message nga nag exist natoh na email
+                'password'    => 'required|min:8',
+             ];
+        }
+
+
+        else if(request()->routeIs('users.store')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
 
             return [
                 'firstname'        => 'required|max:255', //makita ni sya sa available validation rules laravel docu
@@ -51,5 +60,12 @@ class UserRequest extends FormRequest
                 'password'    => 'required|confirmed|min:8',
              ];
         }
+        else if(request()->routeIs('users.image')||request()->routeIs('profile.image')) {
+            
+            return [
+                'image'       => 'required|image|mimes:jpg,bmp,png|max:2048',
+             ];
+        }
+        else { return [];};
     }
 }
