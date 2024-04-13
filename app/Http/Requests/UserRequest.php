@@ -29,7 +29,6 @@ class UserRequest extends FormRequest
              ];
         }
 
-
         else if(request()->routeIs('users.store')) { //magamit rani sila tulo kanang sa ubos kong ang ihit nga route is users.store
 
             return [
@@ -51,7 +50,7 @@ class UserRequest extends FormRequest
         else if(request()->routeIs('users.email')) {
             
             return [
-                'email'       => 'required|string|email|max:255', 
+                'email'       => 'required|email|max:255', 
              ];
         }
         else if(request()->routeIs('users.password')) {
